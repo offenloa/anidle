@@ -1,0 +1,35 @@
+{
+  "name": "personal_website",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "app": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/offenloa/personal_website.git"
+  },
+  "author": "Ayden Offenloch",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/offenloa/personal_website/issues"
+  },
+  "homepage": "https://github.com/offenloa/personal_website#readme",
+  "dependencies": {
+    "@apollo/client": "^3.7.12",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
+    "@mui/material": "^5.12.0",
+    "body-parser": "^1.20.2",
+    "config": "^3.3.9",
+    "express": "^4.18.2",
+    "graphql": "^16.6.0",
+    "mongoose": "^7.0.3"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
