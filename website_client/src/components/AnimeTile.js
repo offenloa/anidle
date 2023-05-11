@@ -6,10 +6,12 @@ function AnimeTile({ani}){
 
 
     return (
-        <Card>
-            <CardMedia height="100" image={ani.coverImage.large} sx={{"height": "329px", "width": "230px", "objectFit": "contain"}}></CardMedia>
-            <CardHeader title={ani.title.romaji} />
-        </Card>
+        <a href={ani.siteUrl}>
+            <Card sx={{"maxWidth": "230px"}}>
+                <CardMedia height="100" image={ani.coverImage.large} sx={{"height": "329px", "width": "230px", "objectFit": "contain"}}></CardMedia>
+                <CardHeader title={ani.title.romaji} />
+            </Card>
+        </a>
     );
 }
 export default AnimeTile;

@@ -1,15 +1,33 @@
 import React, { useState } from 'react';
-import { Box, Button, Card, Container, Paper, TextField, Typography } from '@mui/material';
+import { Grid, Autocomplete, Box, Button, Card, Container, Paper, TextField, Typography } from '@mui/material';
 
 import {useQuery, gql} from '@apollo/client'
+import animebank from '../animebank.json'
+import { blueGrey } from '@mui/material/colors';
 
-function AnimeSearch({search, onChange}){
+function AnimeSearch({onSubmit, onGameReset, gameOver}){
+    const [term, setTerm] = useState("");
+    const [guessID, setGuessID] = useState("");
+    function onClick() {
+        onSubmit(guessID.id);
+    }
+    
+    let options = animebank.data.Page.media.map((ani) => ({label: ani.title.romaji+(ani.title.english!=null?" ("+ani.title.english+")":""), id: ani.id}));
+
     return (
-            <Paper sx={{"px": "16px", "py": "8px"}}>
-                <Typography variant='h2'>AnimeSearch</Typography>
+            <Paper sx={{"px": "16px", "py": "8px", backgroundColor: blueGrey[50]}}>
                 <Box marginTop={2}>
-                    <TextField id="search" variant='outlined' label="Search" value={search} onChange={onChange}></TextField>
-
+                    <Autocomplete options={options} value={guessID} onChange={(event, newValue) => {
+          setGuessID(newValue);
+        }} renderInput={(params) => <TextField {...params} label="Anime"/>} onSubmit={(newValue)=> (setGuessID(newValue))} isOptionEqualToValue={(option, value) => option.id === value.id}/>
+                    <Grid paddingTop={1} container direction="row" alignItems="center" justifyContent="space-between">
+                        <Grid item>
+                        <Button variant='contained' disabled={gameOver?true:false} onClick={onClick}>Guess</Button>
+                        </Grid>
+                        <Grid item>
+                        <Button variant='contained' onClick={onGameReset}>Reset</Button>
+                        </Grid>
+                    </Grid>
                 </Box>
 
             </Paper>

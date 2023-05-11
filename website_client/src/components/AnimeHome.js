@@ -1,20 +1,61 @@
 import React, { useState } from 'react';
-import { Box, Button, Card, Container, Paper, TextField, Typography } from '@mui/material';
+import { Grid, Box, Button, Card, Container, Paper, TextField, Typography } from '@mui/material';
 import AnimeSearch from './AnimeSearch';
 import AnimeList from './AnimeList';
+import AnimeCorrect from './AnimeCorrect';
+import Header from './Header';
+//import PoolSelector from './PoolSelector';
+import PoolService from '../services/pool';
+import http from '../http-common';
+import axios from "axios";
+
+
 
 function AnimeHome(){
-    const [query, setQuery] = useState("")
+    const [query, setQuery] = useState(-1);
+    const [animeBank, setAnimeBank] = useState(axios.get("http://localhost:8082/pool").then((result)=> (
+          result.data
+    )));
+    console.log(animeBank);
+    const [truth, setTruth] = useState(animeBank.then((result) => (result[Math.floor((Math.random()*result.length))])));
+    console.log(truth);
+    const [guesses, setGuesses] = useState([]);
+    const [gameOver, setGameOver] = useState(false);
 
-    function onchange(e) {
-        setQuery(e.target.value);
+    //React.useEffect(() => {
+    //  axios.get("http://localhost:8082/pool").then((result)=> {
+    //    setAnimeBank(result.data);
+    //    console.log(animeBank)
+    //    setTruth(animeBank[Math.floor((Math.random()*animeBank.length))]);
+    //  })
+    //}, [])
+  
+    function onSubmit(search) {
+        if (!gameOver){
+          setQuery(search);
+        }
+    }
+
+    function onGameReset() {
+      setTruth(animeBank.then((result) => (result[Math.floor((Math.random()*result.length))])));
+      setQuery(-1);
+      setGuesses([]);
+      setGameOver(false);
     }
 
     return (
-        <Container maxWidth='lg'>
-            <AnimeSearch submit={query} onChange={onchange}/>
+        <Container maxWidth='xl'>
+            <Header/>
             <br/>
-            <AnimeList search={query} />
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+              <AnimeSearch submit={query} onSubmit={onSubmit} onGameReset={onGameReset} gameOver={gameOver}/>
+              </Grid>
+            </Grid>
+            <br/>
+            <AnimeCorrect gameOver={gameOver} answer={truth}></AnimeCorrect>
+            <br/>
+            <AnimeList search={query} answer={truth} guesses={guesses} setGameOver={setGameOver}/>
         </Container>
     );
 }

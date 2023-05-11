@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 
-import Frontpage from './components/Homepage'
+import Frontpage from './components/Homepage';
 import AnimeHome from './components/AnimeHome';
 
 function App() {
