@@ -11,7 +11,7 @@ var pool = require("./routes/api/pool.js");
 var cronFunction = require("./cron/cron.js");
 
 var corsOptions = {
-    origin: "http://localhost:3000"
+    origin: "http://74.208.188.50:3000"
   };
 
 connectDB();

@@ -13,9 +13,9 @@ import axios from "axios";
 
 function AnimeHome(){
     const [query, setQuery] = useState(-1);
-    const [animeBank, setAnimeBank] = useState(axios.get("http://localhost:8082/pool"));
+    const [animeBank, setAnimeBank] = useState(axios.get("http://74.208.188.50:8082/pool"));
     console.log(animeBank);
-    const [truth, setTruth] = useState(axios.get("http://localhost:8082/pool/daily").then((result)=>(result.data)));
+    const [truth, setTruth] = useState(axios.get("http://74.208.188.50:8082/pool/daily").then((result)=>(result.data)));
     console.log(truth);
     const [guesses, setGuesses] = useState([]);
     const [gameOver, setGameOver] = useState(false);
@@ -35,7 +35,7 @@ function AnimeHome(){
     }
 
     function onGameReset() {
-      setTruth(axios.get("http://localhost:8082/pool/random").then((result)=>(result.data)));
+      setTruth(axios.get("http://74.208.188.50:8082/pool/random").then((result)=>(result.data)));
       setQuery(-1);
       setGuesses([]);
       setGameOver(false);
