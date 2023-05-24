@@ -13,11 +13,9 @@ import axios from "axios";
 
 function AnimeHome(){
     const [query, setQuery] = useState(-1);
-    const [animeBank, setAnimeBank] = useState(axios.get("http://localhost:8082/pool").then((result)=> (
-          result.data
-    )));
+    const [animeBank, setAnimeBank] = useState(axios.get("http://localhost:8082/pool"));
     console.log(animeBank);
-    const [truth, setTruth] = useState(animeBank.then((result) => (result[Math.floor((Math.random()*result.length))])));
+    const [truth, setTruth] = useState(axios.get("http://localhost:8082/pool/daily").then((result)=>(result.data)));
     console.log(truth);
     const [guesses, setGuesses] = useState([]);
     const [gameOver, setGameOver] = useState(false);
@@ -37,7 +35,7 @@ function AnimeHome(){
     }
 
     function onGameReset() {
-      setTruth(animeBank.then((result) => (result[Math.floor((Math.random()*result.length))])));
+      setTruth(axios.get("http://localhost:8082/pool/random").then((result)=>(result.data)));
       setQuery(-1);
       setGuesses([]);
       setGameOver(false);
@@ -49,7 +47,7 @@ function AnimeHome(){
             <br/>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-              <AnimeSearch submit={query} onSubmit={onSubmit} onGameReset={onGameReset} gameOver={gameOver}/>
+              <AnimeSearch submit={query} bank={animeBank} onSubmit={onSubmit} onGameReset={onGameReset} gameOver={gameOver}/>
               </Grid>
             </Grid>
             <br/>

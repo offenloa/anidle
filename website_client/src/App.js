@@ -9,8 +9,8 @@ function App() {
     <Router>
       <div>
         <Routes>
-          <Route exact path='/' element={<Frontpage />} />
-          <Route path='/home' element={<Frontpage />} />
+          <Route exact path='/' element={<AnimeHome />} />
+          <Route path='/home' element={<AnimeHome />} />
           <Route path='/anime' element={<AnimeHome />} />
         </Routes>
       </div>

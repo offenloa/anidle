@@ -1,6 +1,7 @@
 // routes/api/books.js
 
 const express = require('express');
+const Answer = require("../../models/Answer.js")
 const router = express.Router();
 
 const animebank = require("../../animebank.json");
@@ -13,6 +14,16 @@ router.get('/test', (req, res) => res.send('book route testing!'));
 
 router.get('/', (req, res) => {
   res.send(animebank.data.Page.media);
+});
+
+router.get('/random', (req, res) => {
+  let pool = animebank.data.Page.media;
+  res.send(pool[Math.floor((Math.random()*pool.length))]);
+});
+
+router.get('/daily', async (req, res) => {
+  let daily = await Answer.findOne({name: "daily"});
+  res.send(daily.data);
 });
 
 

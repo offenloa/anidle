@@ -13,6 +13,8 @@ function AnimeCorrect({gameOver, answer}){
 
             let answerResult = await answer;
 
+            console.log(answerResult);
+
             setAnswerStats(answerResult);
         }
         getAnswer();
@@ -25,16 +27,30 @@ function AnimeCorrect({gameOver, answer}){
             gameOver ?
             <Paper sx={{"px": "16px", "py": "8px", backgroundColor: blueGrey[50]}}>
                 <div>
-                    <Typography variant='h4'>The anime was {answerStats.title.english != null ? answerStats.title.english : answerStats.title.romaji}</Typography>
-                    <Grid paddingTop={2} container columns={{xs: 2}} justifyContent="flex-start">
-                        <Grid item xs={1} alignContent="center">
-                        <a href={answerStats.siteUrl}><img src={answerStats.coverImage.large}/></a>
-                        </Grid>
-                        
-                        <Grid item xs={1} >
-                        {answerStats.description.replaceAll("<br>", "\n").replaceAll("</br>", "")}
-                        </Grid>
-                    </Grid>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                    <Typography variant='h4'>The anime was {answerStats.title.english != null ? answerStats.title.english : answerStats.title.romaji} !</Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                    <a href={answerStats.siteUrl}><img src={answerStats.coverImage.large}/></a>
+                </Box>
+                <Box
+                  sx={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                  }}
+                >
+                    {answerStats.description.replaceAll("<br>", "\n").replaceAll("</br>", "")}
+                </Box>
                 </div>
             </Paper>
             :

@@ -1,18 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Grid, Autocomplete, Box, Button, Card, Container, Paper, TextField, Typography } from '@mui/material';
 
 import {useQuery, gql} from '@apollo/client'
 import animebank from '../animebank.json'
 import { blueGrey } from '@mui/material/colors';
 
-function AnimeSearch({onSubmit, onGameReset, gameOver}){
+function AnimeSearch({onSubmit, onGameReset, gameOver, bank}){
     const [term, setTerm] = useState("");
     const [guessID, setGuessID] = useState("");
     function onClick() {
         onSubmit(guessID.id);
     }
     
-    let options = animebank.data.Page.media.map((ani) => ({label: ani.title.romaji+(ani.title.english!=null?" ("+ani.title.english+")":""), id: ani.id}));
+    const [options, setOptions] = useState([]);
+
+    useEffect(() => {
+        const getBank = async () => {
+
+            let answerResult = bank.then((result) => (result.data.map((ani) => ({label: ani.title.romaji+(ani.title.english!=null?" ("+ani.title.english+")":""), id: ani.id}))));
+
+            let pool = await answerResult;
+
+            console.log(pool);
+
+            setOptions(pool);
+        }
+        getBank();
+    }, []);
 
     return (
             <Paper sx={{"px": "16px", "py": "8px", backgroundColor: blueGrey[50]}}>

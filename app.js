@@ -3,10 +3,12 @@
 const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
+const CronJob = require('cron').CronJob;
 
 const app = express();
 
 var pool = require("./routes/api/pool.js");
+var cronFunction = require("./cron/cron.js");
 
 var corsOptions = {
     origin: "http://localhost:3000"
@@ -14,6 +16,14 @@ var corsOptions = {
 
 connectDB();
 
+var job = new CronJob(
+  '0 0 0 * * *',
+  cronFunction,
+  null,
+  true,
+  'America/Los_Angeles'
+)
+job.start()
 
 app.use(cors(corsOptions));
 app.use(express.json());
