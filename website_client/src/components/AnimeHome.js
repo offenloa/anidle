@@ -8,15 +8,14 @@ import Header from './Header';
 import PoolService from '../services/pool';
 import http from '../http-common';
 import axios from "axios";
+import config from "../config.json"
 
 
 
 function AnimeHome(){
     const [query, setQuery] = useState(-1);
-    const [animeBank, setAnimeBank] = useState(axios.get("http://74.208.188.50:8082/pool"));
-    console.log(animeBank);
-    const [truth, setTruth] = useState(axios.get("http://74.208.188.50:8082/pool/daily").then((result)=>(result.data)));
-    console.log(truth);
+    const [animeBank, setAnimeBank] = useState(axios.get("http://"+config.api_addr+":"+config.api_port+"/pool"));
+    const [truth, setTruth] = useState(axios.get("http://"+config.api_addr+":"+config.api_port+"/pool/daily").then((result)=>(result.data)));
     const [guesses, setGuesses] = useState([]);
     const [gameOver, setGameOver] = useState(false);
 
@@ -35,7 +34,7 @@ function AnimeHome(){
     }
 
     function onGameReset() {
-      setTruth(axios.get("http://74.208.188.50:8082/pool/random").then((result)=>(result.data)));
+      setTruth(axios.get("http://"+config.api_addr+":"+config.api_port+"/pool/random").then((result)=>(result.data)));
       setQuery(-1);
       setGuesses([]);
       setGameOver(false);

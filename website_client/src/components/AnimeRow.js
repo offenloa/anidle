@@ -9,10 +9,6 @@ function AnimeRow({ani, answerPromise, setGameOver}){
     const correct = green[200];
     const [results, setResults] = useState({})
 
-    
-
-    console.log(ani);
-
     useEffect(() => {
         const getResults = async () => {
 
@@ -29,7 +25,7 @@ function AnimeRow({ani, answerPromise, setGameOver}){
                     .map((studio) => (studio.name));
             }
             interimResults.studioGuess = ani.studios.nodes.filter((studio) => (studio.isAnimationStudio)).map((studio) => (
-                <Chip sx={{backgroundColor: answerStudios.includes(studio.name)? correct : incorrect}} label={studio.name}></Chip>
+                <Chip key={studio.name} sx={{backgroundColor: answerStudios.includes(studio.name)? correct : incorrect}} label={studio.name}></Chip>
             ))
             
             interimResults.seasonGuess = <Chip sx={{backgroundColor: ani.season === answer.season ? correct : incorrect}} label={ani.season}></Chip>
@@ -50,9 +46,9 @@ function AnimeRow({ani, answerPromise, setGameOver}){
                 return (!tag.isMediaSpoiler && !tag.isGeneralSpoiler)
             }).map((tag) => (tag.name));
 
-            interimResults.genreGuess = ani.genres.map((genre) => (<Chip sx={{backgroundColor: answer.genres.includes(genre) ? correct : incorrect}} label={genre}></Chip>))
+            interimResults.genreGuess = ani.genres.map((genre) => (<Chip key={genre} sx={{backgroundColor: answer.genres.includes(genre) ? correct : incorrect}} label={genre}></Chip>))
 
-            interimResults.tagGuess = aniTags.map((tag) => (<Chip sx={{backgroundColor: answerTags.includes(tag.name) ? correct : incorrect}} label={tag.name+"-"+tag.rank}></Chip>))
+            interimResults.tagGuess = aniTags.map((tag) => (<Chip key={tag.name} sx={{backgroundColor: answerTags.includes(tag.name) ? correct : incorrect}} label={tag.name+"-"+tag.rank}></Chip>))
 
             if (ani.id === answer.id) {
                 setGameOver(true);

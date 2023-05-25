@@ -21,8 +21,6 @@ function AnimeSearch({onSubmit, onGameReset, gameOver, bank}){
 
             let pool = await answerResult;
 
-            console.log(pool);
-
             setOptions(pool);
         }
         getBank();

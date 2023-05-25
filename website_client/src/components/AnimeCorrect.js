@@ -13,8 +13,6 @@ function AnimeCorrect({gameOver, answer}){
 
             let answerResult = await answer;
 
-            console.log(answerResult);
-
             setAnswerStats(answerResult);
         }
         getAnswer();
