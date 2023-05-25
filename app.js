@@ -4,6 +4,7 @@ const express = require('express');
 const connectDB = require('./config/db');
 const cors = require('cors');
 const CronJob = require('cron').CronJob;
+require('dotenv').config();
 
 const app = express();
 
@@ -11,7 +12,7 @@ var pool = require("./routes/api/pool.js");
 var cronFunction = require("./cron/cron.js");
 
 var corsOptions = {
-    origin: "http://74.208.188.50:3000"
+    origin: "http://"+process.env.ORIGIN
   };
 
 connectDB();
