@@ -1,0 +1,10 @@
+[Unit]
+Description=Anime Guessing Game api
+
+[Service]
+ExecStart=/personal_website/run.sh
+Restart=on-failure
+EnvironmentFile=/etc/environment
+
+[Install]
+WantedBy=multi-user.target

@@ -20,7 +20,7 @@ function AnimeHome(){
     const [gameOver, setGameOver] = useState(false);
 
     //React.useEffect(() => {
-    //  axios.get("http://localhost:8082/pool").then((result)=> {
+    //  axios.get("http://74.208.188.50:8082/pool").then((result)=> {
     //    setAnimeBank(result.data);
     //    console.log(animeBank)
     //    setTruth(animeBank[Math.floor((Math.random()*animeBank.length))]);
