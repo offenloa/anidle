@@ -1,22 +1,36 @@
 import React, { useState } from 'react';
-import { Grid, Autocomplete, Box, Button, Card, Container, Paper, TextField, Typography } from '@mui/material';
+import { Grid, Link, Autocomplete, Box, Button, Card, Container, Paper, TextField, Typography, AppBar } from '@mui/material';
 
 import {useQuery, gql} from '@apollo/client'
 import animebank from '../animebank.json'
-import { blueGrey } from '@mui/material/colors';
+import { blueGrey, grey} from '@mui/material/colors';
 
-function Header(){
+function Header({unlimited}){
     return (
-            <Paper sx={{"px": "16px", "py": "8px", backgroundColor: blueGrey[50]}}>
-                <Grid paddingTop={1} container direction="row" alignItems="bottom" justifyContent="space-between">
+            <AppBar sx={{"px": "16px", "py": "8px", backgroundColor: grey[500]}} position='static'>
+                <Grid container direction="row" alignItems="flex-end" justifyContent="space-between">
                     <Grid item>
-                    <Typography variant='h2' justifyContent="bottom">Anime Guessing Game</Typography>
+                    <img src="osaka.png" width="auto" height="72px"></img>  
                     </Grid>
                     <Grid item>
-                    <img src="osaka.png" width="100px" height="auto"></img>  
+                    <Typography variant='h2'>Animedle {unlimited?"Unlimited":"Daily"}</Typography>
+                    </Grid>
+                    <Grid item>
+                    {
+                        unlimited?
+                        <Link href='/'
+                         underline="hover"
+                         color={"#FFFFFF"}>
+                        <Typography variant='h4' >Daily</Typography>
+                        </Link>
+                        :
+                        <Link href="/unlimited" underline="hover" color={"#FFFFFF"}>
+                        <Typography variant='h4'>Unlimited</Typography>
+                        </Link>
+                    }
                     </Grid>
                 </Grid>
-            </Paper>
+            </AppBar>
     );
 }
 export default Header;
