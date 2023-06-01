@@ -12,6 +12,7 @@ function App() {
           <Route exact path='/' element={<AnimeHome />} />
           <Route path='/home' element={<AnimeHome />} />
           <Route path='/anime' element={<AnimeHome />} />
+          <Route path='/unlimited' element={<AnimeHome unlimited={true}/>} />
         </Routes>
       </div>
     </Router>

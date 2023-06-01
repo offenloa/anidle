@@ -16,14 +16,15 @@ function AnimeCorrect({gameOver, answer}){
             setAnswerStats(answerResult);
         }
         getAnswer();
-    }, []);
+    }, [answer]);
         
 
     return (
         <>
         {
             gameOver ?
-            <Paper sx={{"px": "16px", "py": "8px", backgroundColor: blueGrey[50]}}>
+            <>
+            <Paper variant="outlined" square sx={{"px": "16px", "py": "8px", backgroundColor: blueGrey[50]}}>
                 <div>
                 <Box
                   sx={{
@@ -51,6 +52,8 @@ function AnimeCorrect({gameOver, answer}){
                 </Box>
                 </div>
             </Paper>
+            <br/>
+            </>
             :
             <>{gameOver}</>
         }

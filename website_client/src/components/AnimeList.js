@@ -60,7 +60,7 @@ X-MAL-CLIENT-ID: 936f5b95b86b05f81a051b9dece15999
 
 `
 
-function AnimeList({search, answer, guesses, setGameOver}){
+function AnimeList({search, answer, guesses, setGuesses, setGameOver}){
     const { loading, error, data } = useQuery(AL_ANIME_QUERY, {
         variables: {"id": search}
     });
@@ -80,7 +80,7 @@ function AnimeList({search, answer, guesses, setGameOver}){
             }
             return false;
         })) {
-            guesses.unshift(guess);
+            setGuesses(guess);
         }
     }
     tableItems = guesses.map((ani) => (
@@ -91,14 +91,14 @@ function AnimeList({search, answer, guesses, setGameOver}){
     
     if (guesses.length == 0) {
         return (
-            <Paper sx={{"px": "16px", "py": "8px", backgroundColor: blueGrey[50]}}>
+            <Paper variant="outlined" square sx={{"px": "16px", "py": "8px", backgroundColor: blueGrey[50]}}>
             <Typography variant='h4'>Guess an anime to begin!</Typography>
             </Paper>
         );
     }
 
     return (
-        <Paper sx={{"px": "16px", "py": "8px", backgroundColor: blueGrey[50]}}>
+        <Paper variant="outlined" square sx={{"px": "16px", "pt": "8px", "mb":"32px", backgroundColor: blueGrey[50]}}>
             <Typography variant='h4'>History ({guesses.length} guess{guesses.length>1?"es":""})</Typography>
             <TableContainer>
                 <Table>
