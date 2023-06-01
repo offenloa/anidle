@@ -64,7 +64,7 @@ function AnimeRow({ani, answerPromise, setGameOver}){
     return (
         <>
             <TableCell align='center'>
-                <a href={ani.siteUrl}><img src={ani.coverImage.medium}/></a>
+                <a href={ani.siteUrl}><Box sx={{ width: 100, height: 142}}><img src={ani.coverImage.medium} height="142px" width="100px"/></Box></a>
             </TableCell>
             <TableCell align='center'>
                 {results.titleGuess}

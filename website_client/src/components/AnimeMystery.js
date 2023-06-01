@@ -69,7 +69,7 @@ function AnimeMystery({answerPromise, guesses}){
                   whiteSpace: 'normal',
                 }}} label={(answer.title.english != null ? answer.title.english : answer.title.romaji)}></Chip>
                 mystery.titleRevealed = true;
-                mystery.image = <a href={latestGuess.siteUrl}><img src={latestGuess.coverImage.medium}/></a>;
+                mystery.image = <a href={latestGuess.siteUrl}><Box sx={{ width: 100, height: 142}}><img src={latestGuess.coverImage.medium}/></Box></a>;
             }
             
             if (latestGuess.seasonYear == answer.seasonYear){

@@ -107,25 +107,25 @@ function AnimeList({search, answer, guesses, setGuesses, setGameOver}){
                             <TableCell align="center" colSpan={2}>
                                 Guess
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell align="center" colSpan={1}>
                                 Year
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell align="center" colSpan={1}>
                                 Season
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell align="center" colSpan={1}>
                                 Episodes
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell align="center" colSpan={1}>
                                 Score
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell align="center" colSpan={1}>
                                 Studio(s)
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell align="center" colSpan={1}>
                                 Genres
                             </TableCell>
-                            <TableCell align="center">
+                            <TableCell align="center" colSpan={1}>
                                 Tags
                             </TableCell>
                         </TableRow>
