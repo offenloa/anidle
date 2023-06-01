@@ -33,14 +33,14 @@ function AnimeSearch({onSubmit, onGameReset, gameOver, bank, unlimited}){
           setGuessID(newValue);
         }} renderInput={(params) => <TextField {...params} label="Anime"/>} onSubmit={(newValue)=> (setGuessID(newValue))} isOptionEqualToValue={(option, value) => option.id === value.id}/>
                     {!unlimited?
-                    <Button sx={{"mt": 1}} variant='contained' disabled={gameOver?true:false} onClick={onClick}>Guess</Button>
+                    <Button sx={{"mt": 1}} variant='contained' className="bg-gradient-to-r from-fuchsia-500 to-cyan-500" disabled={gameOver?true:false} onClick={onClick}>Guess</Button>
                     :
                     <Grid paddingTop={1} container direction="row" alignItems="center" justifyContent="space-between">
                         <Grid item>
-                        <Button variant='contained' disabled={gameOver?true:false} onClick={onClick}>Guess</Button>
+                        <Button variant='contained' className='bg-gradient-to-r from-fuchsia-500 to-cyan-500' disabled={gameOver?true:false} onClick={onClick}>Guess</Button>
                         </Grid>
                         <Grid item>
-                        <Button variant='contained' onClick={onGameReset}>Reset</Button>
+                        <Button variant='contained' className='bg-gradient-to-r from-fuchsia-500 to-cyan-500' onClick={onGameReset}>Reset</Button>
                         </Grid>
                     </Grid>}
                 </Box>
