@@ -25,6 +25,7 @@ function AnimeHome({unlimited}){
     const [guesses, setGuesses] = useState([]);
     const [gameOver, setGameOver] = useState(false);
     const [toggle, setToggle] = useState(false);
+    const [revealTags, setRevealTags] = useState(false);
 
     function addGuess(guess) {
       guesses.unshift(guess);
@@ -45,6 +46,7 @@ function AnimeHome({unlimited}){
         let res = result.data[Math.floor(Math.random()*result.data.length)];
         return res;
       }));
+      setRevealTags(false);
       setQuery(-1);
       setGuesses([]);
       setGameOver(false);
@@ -57,6 +59,7 @@ function AnimeHome({unlimited}){
         let res = result.data[Math.floor(Math.random()*result.data.length)];
         return res;
       }));
+      setRevealTags(false);
       setQuery(-1);
       setGuesses([]);
       setGameOver(false);
@@ -74,6 +77,7 @@ function AnimeHome({unlimited}){
         let res = result.data[Math.floor(Math.random()*result.data.length)];
         return res;
       }));
+      setRevealTags(false);
       setQuery(-1);
       setGuesses([]);
       setGameOver(false);
@@ -81,7 +85,7 @@ function AnimeHome({unlimited}){
     }
 
     return (
-      <div style={{"min-height": "100vh", "display": "flex", "flex-direction": "column"}}>
+      <div className="bg-slate-900" style={{"minHeight": "100vh", "display": "flex", "flexDirection": "column"}}>
         <Header unlimited={unlimited}/>
         <Container maxWidth='xl' style={{"flex": 1}}>
             <br/>
@@ -99,7 +103,7 @@ function AnimeHome({unlimited}){
             }
             <br/>
             <AnimeCorrect gameOver={gameOver} answer={truth}></AnimeCorrect>
-            <AnimeMystery toggle={toggle} answerPromise={truth} guesses={guesses}></AnimeMystery>
+            <AnimeMystery toggle={toggle} answerPromise={truth} guesses={guesses} revealTags={revealTags} setRevealTags={setRevealTags}></AnimeMystery>
             <Grid container spacing={2}>
               <Grid item xs={12}>
               <AnimeSearch toggle={toggle} submit={query} bank={animeBank} onSubmit={onSubmit} onGameReset={onGameReset} gameOver={gameOver} unlimited={unlimited}/>

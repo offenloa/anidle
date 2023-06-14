@@ -24,7 +24,7 @@ function AnimeCorrect({gameOver, answer}){
         {
             gameOver ?
             <>
-            <Paper variant="outlined" square sx={{"px": "16px", "py": "8px", backgroundColor: blueGrey[50]}}>
+            <Paper variant="outlined" square sx={{"px": "16px", "py": "8px"}}>
                 <div>
                 <Box
                   sx={{

@@ -3,10 +3,11 @@ import { Chip, TableRow, Box, Button, Card, CardHeader, CardMedia, Container, Pa
 import { red, green} from '@mui/material/colors';
 import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
 import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
+import CheckIcon from '@mui/icons-material/Check';
 
 function AnimeRow({ani, answerPromise, setGameOver}){
-    const incorrect = red[200];
-    const correct = green[200];
+    const incorrect = red[900];
+    const correct = green[900];
     const [results, setResults] = useState({})
 
     useEffect(() => {
@@ -15,9 +16,9 @@ function AnimeRow({ani, answerPromise, setGameOver}){
             let answer = await answerPromise;
 
             let interimResults = {}
-            interimResults.yearGuess = <Chip sx={{backgroundColor: ani.seasonYear == answer.seasonYear ? correct : incorrect}} label={ani.seasonYear} icon={ani.seasonYear === answer.seasonYear? "" : ani.seasonYear < answer.seasonYear? <ArrowUpwardIcon/> : <ArrowDownwardIcon/>}></Chip>
+            interimResults.yearGuess = <Chip sx={{backgroundColor: ani.seasonYear == answer.seasonYear ? correct : incorrect}} label={ani.seasonYear} icon={ani.seasonYear === answer.seasonYear? <CheckIcon/> : (ani.seasonYear < answer.seasonYear? <ArrowUpwardIcon/> : <ArrowDownwardIcon/>)}></Chip>
 
-            interimResults.episodeGuess = <Chip sx={{backgroundColor: ani.episodes == answer.episodes ? correct : incorrect}} label={ani.episodes} icon={ani.episodes === answer.episodes? "" : ani.episodes < answer.episodes? <ArrowUpwardIcon/> : <ArrowDownwardIcon/>}></Chip>
+            interimResults.episodeGuess = <Chip sx={{backgroundColor: ani.episodes == answer.episodes ? correct : incorrect}} label={ani.episodes} icon={ani.episodes === answer.episodes? <CheckIcon/> : (ani.episodes < answer.episodes? <ArrowUpwardIcon/> : <ArrowDownwardIcon/>)}></Chip>
 
             let answerStudios = []
             if (answer.studios!= null) {
@@ -30,7 +31,7 @@ function AnimeRow({ani, answerPromise, setGameOver}){
             
             interimResults.seasonGuess = <Chip sx={{backgroundColor: ani.season === answer.season ? correct : incorrect}} label={ani.season}></Chip>
 
-            interimResults.scoreGuess = <Chip sx={{backgroundColor: ani.averageScore == answer.averageScore ? correct : incorrect}} label={ani.averageScore} icon={ani.averageScore === answer.averageScore? "" : ani.averageScore < answer.averageScore? <ArrowUpwardIcon/> : <ArrowDownwardIcon/>}></Chip>
+            interimResults.scoreGuess = <Chip sx={{backgroundColor: ani.averageScore == answer.averageScore ? correct : incorrect}} label={ani.averageScore} icon={ani.averageScore === answer.averageScore? <CheckIcon/> : (ani.averageScore < answer.averageScore? <ArrowUpwardIcon/> : <ArrowDownwardIcon/>)}></Chip>
 
             interimResults.titleGuess = <Chip sx={{backgroundColor: ani.id === answer.id ? correct : incorrect, height: 'auto',
             '& .MuiChip-label': {

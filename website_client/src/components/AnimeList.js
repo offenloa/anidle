@@ -91,14 +91,14 @@ function AnimeList({search, answer, guesses, setGuesses, setGameOver}){
     
     if (guesses.length == 0) {
         return (
-            <Paper variant="outlined" square sx={{"px": "16px", "py": "8px", backgroundColor: blueGrey[50]}}>
+            <Paper variant="outlined" square sx={{"px": "16px", "py": "8px"}}>
             <Typography variant='h4'>Guess an anime to begin!</Typography>
             </Paper>
         );
     }
 
     return (
-        <Paper variant="outlined" square sx={{"px": "16px", "pt": "8px", "mb":"32px", backgroundColor: blueGrey[50]}}>
+        <Paper variant="outlined" square sx={{"px": "16px", "pt": "8px", "mb":"32px"}}>
             <Typography variant='h4'>History ({guesses.length} guess{guesses.length>1?"es":""})</Typography>
             <TableContainer>
                 <Table>

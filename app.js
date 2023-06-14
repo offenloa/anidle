@@ -9,7 +9,7 @@ require('dotenv').config();
 const app = express();
 
 var pool = require("./routes/api/pool.js");
-var cronFunction = require("./cron/cron.js");
+var {update_answer, update_pool} = require("./cron/cron.js");
 
 var corsOptions = {
     origin: "http://"+process.env.ORIGIN
@@ -19,7 +19,16 @@ connectDB();
 
 var job = new CronJob(
   '0 0 0 * * *',
-  cronFunction,
+  update_answer,
+  null,
+  true,
+  'America/Los_Angeles'
+)
+job.start()
+
+var job = new CronJob(
+  '0 50 23 * * *',
+  update_pool,
   null,
   true,
   'America/Los_Angeles'

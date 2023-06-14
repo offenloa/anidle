@@ -5,8 +5,8 @@ import {useQuery, gql} from '@apollo/client';
 import { blueGrey, green, lightBlue } from '@mui/material/colors';
 
 
-function AnimeMystery({answerPromise, guesses}){
-    const correct = green[200];
+function AnimeMystery({answerPromise, guesses, revealTags, setRevealTags}){
+    const correct = green[900];
     const [mystery, setMystery] = useState({})
     const [answer, setAnswer] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -38,11 +38,10 @@ function AnimeMystery({answerPromise, guesses}){
             mystery.episodeMax = 9999;
             mystery.scoreRevealed = false;
             mystery.scoreMin = 0;
-            mystery.scoreMax = 9999;
+            mystery.scoreMax = 100;
             mystery.studio = false;
             mystery.image = false;
             mystery.image = false;
-            console.log(answer)
             mystery.title = <Chip sx={{ height: 'auto',
             '& .MuiChip-label': {
               display: 'block',
@@ -59,8 +58,8 @@ function AnimeMystery({answerPromise, guesses}){
             mystery.genres = answer.genres.map((genre) => (<Chip key={genre} label={genre.replace(/[^\s]/g, "_")}></Chip>))
             let answerTags = answer.tags.filter((tag) => {
                 return (!tag.isMediaSpoiler && !tag.isGeneralSpoiler)
-            }).map((tag) => (tag.name)).slice(0,5);
-            mystery.tags = answerTags.map((tag) => (<Chip key={tag} label={tag.replace(/[^\s]/g, "_")}></Chip>))
+            }).slice(0,5);
+            mystery.tags = answerTags.map((tag) => ((revealTags)? <Chip key={tag.name} sx={{backgroundColor: correct}} label={tag.name+"-"+tag.rank}></Chip> :<Chip key={tag.name} label={tag.name.replace(/[^\s]/g, "_")}></Chip>))
         } else {
             let latestGuess = guesses[0];
             if (latestGuess.id == answer.id) {
@@ -77,10 +76,10 @@ function AnimeMystery({answerPromise, guesses}){
                 mystery.yearRevealed = true;
                 mystery.year = <Chip sx={{backgroundColor: correct}} label={answer.seasonYear}></Chip>
             } else if (!mystery.yearRevealed && latestGuess.seasonYear < answer.seasonYear) {
-                mystery.yearMin = Math.max(latestGuess.seasonYear, mystery.yearMin);
+                mystery.yearMin = Math.max(latestGuess.seasonYear+1, mystery.yearMin);
                 mystery.year = <Chip label={mystery.yearMin+"-"+mystery.yearMax}></Chip>
             } else if (!mystery.yearRevealed && latestGuess.seasonYear > answer.seasonYear) {
-                mystery.yearMax = Math.min(latestGuess.seasonYear, mystery.yearMax);
+                mystery.yearMax = Math.min(latestGuess.seasonYear-1, mystery.yearMax);
                 mystery.year = <Chip label={mystery.yearMin+"-"+mystery.yearMax}></Chip>
             }
 
@@ -93,10 +92,10 @@ function AnimeMystery({answerPromise, guesses}){
                 mystery.episodeRevealed = true;
                 mystery.episode = <Chip sx={{backgroundColor: correct}} label={answer.episodes}></Chip>
             } else if (!mystery.episodeRevealed && latestGuess.episodes < answer.episodes) {
-                mystery.episodeMin = Math.max(latestGuess.episodes, mystery.episodeMin);
+                mystery.episodeMin = Math.max(latestGuess.episodes+1, mystery.episodeMin);
                 mystery.episode = <Chip label={mystery.episodeMin+"-"+mystery.episodeMax}></Chip>
             } else if (!mystery.episodeRevealed && latestGuess.episodes > answer.episodes) {
-                mystery.episodeMax = Math.min(latestGuess.episodes, mystery.episodeMax);
+                mystery.episodeMax = Math.min(latestGuess.episodes-1, mystery.episodeMax);
                 mystery.episode = <Chip label={mystery.episodeMin+"-"+mystery.episodeMax}></Chip>
             }
 
@@ -104,10 +103,10 @@ function AnimeMystery({answerPromise, guesses}){
                 mystery.scoreRevealed = true;
                 mystery.score = <Chip sx={{backgroundColor: correct}} label={answer.averageScore}></Chip>
             } else if (!mystery.scoreRevealed && latestGuess.averageScore < answer.averageScore) {
-                mystery.scoreMin = Math.max(latestGuess.averageScore, mystery.episodeMin);
+                mystery.scoreMin = Math.max(latestGuess.averageScore+1, mystery.episodeMin);
                 mystery.score = <Chip label={mystery.scoreMin+"-"+mystery.scoreMax}></Chip>
             } else if (!mystery.scoreRevealed && latestGuess.averageScore > answer.averageScore) {
-                mystery.scoreMax = Math.min(latestGuess.averageScore, mystery.scoreMax);
+                mystery.scoreMax = Math.min(latestGuess.averageScore-1, mystery.scoreMax);
                 mystery.score = <Chip label={mystery.scoreMin+"-"+mystery.scoreMax}></Chip>
             }
 
@@ -145,13 +144,17 @@ function AnimeMystery({answerPromise, guesses}){
 
             sieve = answerTags.map((tag) => (tagPool.includes(tag.name)));
 
-            mystery.tags = answerTags.map((tag, idx) => (sieve[idx]? <Chip key={tag.name} sx={{backgroundColor: correct}} label={tag.name+"-"+tag.rank}></Chip> :<Chip key={tag.name} label={tag.name.replace(/[^\s]/g, "_")}></Chip>))
+            mystery.tags = answerTags.map((tag, idx) => ((sieve[idx] || revealTags)? <Chip key={tag.name} sx={{backgroundColor: correct}} label={tag.name+"-"+tag.rank}></Chip> :<Chip key={tag.name} label={tag.name.replace(/[^\s]/g, "_")}></Chip>))
 
         }
 
     return (
-        <Paper variant="outlined" square sx={{"px": "16px", "py": "8px", backgroundColor: blueGrey[50]}}>
-            <Typography variant='h4'>Mystery Anime</Typography>
+        <Paper variant="outlined" square sx={{"px": "16px", "py": "8px"}}>
+            <div style={{display: "flex", justifyContent: "space-between", alignItems: "flex-end"}} >
+                <Typography variant='h4'>Mystery Anime</Typography>
+                <Button variant='contained' style={{color: "white"}} disabled={revealTags} className={revealTags?"text-white bg-gray-400":'text-white bg-gradient-to-r from-fuchsia-500 to-cyan-500'} onClick={() => (setRevealTags(true))}>Reveal Tags</Button>
+            </div>
+
             <TableContainer>
                 <Table>
                     <TableHead>

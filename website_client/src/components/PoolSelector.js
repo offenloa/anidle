@@ -5,8 +5,6 @@ import { blueGrey } from '@mui/material/colors';
 import http from "../http-common";
 import PoolService from '../services/pool';
 
-let pool = PoolService.getBank();
-
 
 function PoolSelector({setPoolTop, setPoolAcc}){
     const [choice, setChoice] = useState("top1000");
@@ -27,7 +25,7 @@ function PoolSelector({setPoolTop, setPoolAcc}){
     }
 
     return (
-    <Paper variant="outlined" square sx={{"height": 1, "px": "16px", "py": "8px", backgroundColor: blueGrey[50]}}>
+    <Paper variant="outlined" square sx={{"height": 1, "px": "16px", "py": "8px"}}>
     <FormControl>
       <FormLabel id="pool-chooser">Choose Source</FormLabel>
       <RadioGroup
@@ -38,7 +36,7 @@ function PoolSelector({setPoolTop, setPoolAcc}){
         onChange={(event, newValue)=>(onRadioChange(event, newValue))}
         defaultValue="top1000"
       >
-        <FormControlLabel value="top1000" control={<Radio />} label="Top 500" />
+        <FormControlLabel value="top1000" control={<Radio />} label="Top 1000" />
         <FormControlLabel value="anilist" control={<Radio />} label="Import From Anilist" />
       </RadioGroup>
     </FormControl>
@@ -48,7 +46,7 @@ function PoolSelector({setPoolTop, setPoolAcc}){
         <TextField variant='standard' value={interimacc} onChange={(event)=>(setInterimAcc(event.target.value))} label="AniList account"/>
         </Grid>
         <Grid item>
-        <Button variant='contained' className='bg-gradient-to-r from-fuchsia-500 to-cyan-500' onClick={()=>(onImport(interimacc))}>Import</Button>
+        <Button style={{color: "white"}} variant='contained' className='bg-gradient-to-r from-fuchsia-500 to-cyan-500' onClick={()=>(onImport(interimacc))}>Import</Button>
         </Grid>
         <p style={{color: "gray", fontSize: "12px"}}>{account? `using anilist account: ${account} (or top 500 if account doesn't exist)`:""}</p>
     </Grid>
