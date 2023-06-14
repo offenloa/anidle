@@ -34,21 +34,15 @@ function AnimeCorrect({gameOver, answer}){
                 >
                     <Typography variant='h4'>The anime was {answerStats.title.english != null ? answerStats.title.english : answerStats.title.romaji} !</Typography>
                 </Box>
+                <br/>
                 <Box
                   sx={{
                     display: 'flex',
-                    justifyContent: 'center',
+                    justifyContent: 'center'
                   }}
                 >
-                    <a href={answerStats.siteUrl}><img src={answerStats.coverImage.large}/></a>
-                </Box>
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                  }}
-                >
-                    {answerStats.description.replaceAll("<br>", "\n").replaceAll("</br>", "")}
+                    
+                    <p style={{flex: 1}}><a style={{float: "right", paddingLeft: 8}} href={answerStats.siteUrl}><img style={{border: "2px solid"}} src={answerStats.coverImage.large}/></a>{answerStats.description.replaceAll("<br>", "\n").replaceAll("</br>", "")}</p>
                 </Box>
                 </div>
             </Paper>

@@ -3,6 +3,7 @@
 const express = require('express');
 const Answer = require("../../models/Answer.js")
 const router = express.Router();
+const { request, GraphQLClient } = require('graphql-request');
 
 const animebank = require("../../animebank.json");
 
@@ -24,6 +25,78 @@ router.get('/random', (req, res) => {
 router.get('/daily', async (req, res) => {
   let daily = await Answer.findOne({name: "daily"});
   res.send(daily.data);
+});
+
+const query = `
+query($page: Int, $perPage: Int, $name: String) {
+  Page(page: $page, perPage: $perPage) {
+    pageInfo {
+      total
+      perPage
+      currentPage
+      lastPage
+      hasNextPage
+    }
+    mediaList (userName: $name, type: ANIME, status: COMPLETED) {
+      media {
+        id
+        averageScore
+        episodes
+        season
+        seasonYear
+        genres
+        coverImage {
+          large
+          color
+        }
+        siteUrl
+        title {
+          romaji
+          english
+        }
+        studios {
+          nodes {
+            id
+            name
+            isAnimationStudio
+          }
+        }
+        tags {
+          name
+          rank
+          isGeneralSpoiler
+          isMediaSpoiler
+        }
+        description
+      }
+    }
+  }
+}
+`;
+
+router.get('/user/:userid', async (req, res) => {
+  console.log(req.params.userid);
+  let variables = {
+    "name": req.params.userid,
+    "page": 0
+  };
+  let hasNextPage;
+  let pool = [];
+  do {
+    variables.page++;
+    let result = await request("https://graphql.anilist.co", query, variables).catch((error) => {res.send(animebank.data.Page.media)})
+    if (result) {
+      hasNextPage = result.Page.pageInfo.hasNextPage;
+      pool = pool.concat(result.Page.mediaList.map((med) => {
+        return med.media;
+      }).filter( (med) => {
+        return med.title !== null;
+      }));
+    } else {
+      return;
+    }
+  } while (hasNextPage)
+  res.send(pool);
 });
 
 

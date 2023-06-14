@@ -5,7 +5,7 @@ import {useQuery, gql} from '@apollo/client'
 import animebank from '../animebank.json'
 import { blueGrey } from '@mui/material/colors';
 
-function AnimeSearch({onSubmit, onGameReset, gameOver, bank, unlimited}){
+function AnimeSearch({toggle, onSubmit, onGameReset, gameOver, bank, unlimited}){
     const [term, setTerm] = useState("");
     const [guessID, setGuessID] = useState("");
     function onClick() {
@@ -17,14 +17,14 @@ function AnimeSearch({onSubmit, onGameReset, gameOver, bank, unlimited}){
     useEffect(() => {
         const getBank = async () => {
 
-            let answerResult = bank.then((result) => (result.data.map((ani) => ({label: ani.title.romaji+(ani.title.english!=null?" ("+ani.title.english+")":""), id: ani.id}))));
+            let answerResult = bank.then((result) => { return result.data.map((ani) => ({label: ani.title.romaji+(ani.title.english!=null?" ("+ani.title.english+")":""), id: ani.id}))});
 
             let pool = await answerResult;
 
             setOptions(pool);
         }
         getBank();
-    }, []);
+    }, [bank, toggle]);
 
     return (
             <Paper variant="outlined" square sx={{"px": "16px", "py": "8px", backgroundColor: blueGrey[50]}}>

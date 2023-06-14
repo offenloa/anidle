@@ -42,6 +42,7 @@ function AnimeMystery({answerPromise, guesses}){
             mystery.studio = false;
             mystery.image = false;
             mystery.image = false;
+            console.log(answer)
             mystery.title = <Chip sx={{ height: 'auto',
             '& .MuiChip-label': {
               display: 'block',

@@ -8,24 +8,26 @@ import PoolService from '../services/pool';
 let pool = PoolService.getBank();
 
 
-function PoolSelector({setPool}){
+function PoolSelector({setPoolTop, setPoolAcc}){
     const [choice, setChoice] = useState("top1000");
     const [account, setAccount] = useState("");
     const [interimacc, setInterimAcc] = useState("");
 
     function onRadioChange(event, newValue) {
         setChoice(newValue);
-        if (choice === "top1000") {
-            setPool(pool);
+        if (newValue === "top1000") {
+          setPoolTop();
+          console.log("setting to top")
         }
     }
 
     function onImport(acc) {
-
+      setAccount(acc);
+      setPoolAcc(acc);
     }
 
     return (
-    <Paper sx={{"px": "16px", "py": "8px", backgroundColor: blueGrey[50]}}>
+    <Paper variant="outlined" square sx={{"height": 1, "px": "16px", "py": "8px", backgroundColor: blueGrey[50]}}>
     <FormControl>
       <FormLabel id="pool-chooser">Choose Source</FormLabel>
       <RadioGroup
@@ -33,10 +35,10 @@ function PoolSelector({setPool}){
         aria-labelledby="pool-chooser"
         name="position"
         value={choice}
-        onChange={(event, newValue)=>(setChoice(newValue))}
+        onChange={(event, newValue)=>(onRadioChange(event, newValue))}
         defaultValue="top1000"
       >
-        <FormControlLabel value="top1000" control={<Radio />} label="Top 1000" />
+        <FormControlLabel value="top1000" control={<Radio />} label="Top 500" />
         <FormControlLabel value="anilist" control={<Radio />} label="Import From Anilist" />
       </RadioGroup>
     </FormControl>
@@ -46,8 +48,9 @@ function PoolSelector({setPool}){
         <TextField variant='standard' value={interimacc} onChange={(event)=>(setInterimAcc(event.target.value))} label="AniList account"/>
         </Grid>
         <Grid item>
-        <Button variant='contained' onClick={()=>(onImport(interimacc))}>Import</Button>
+        <Button variant='contained' className='bg-gradient-to-r from-fuchsia-500 to-cyan-500' onClick={()=>(onImport(interimacc))}>Import</Button>
         </Grid>
+        <p style={{color: "gray", fontSize: "12px"}}>{account? `using anilist account: ${account} (or top 500 if account doesn't exist)`:""}</p>
     </Grid>
     : <></>
     }
